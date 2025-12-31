@@ -13,7 +13,7 @@ When solving a task, follow this order **strictly**:
 1. **`RENDERING_RULES_V3.md`**  
    → Default rendering & React contract (low token, mechanical)
 
-2. **`AI_RULES_V2.md`**  
+2. **`AI_RULES.md`**  
    → Hard constraints that must never be violated
 
 3. **`CODING_STANDARDS.md`**  
@@ -48,8 +48,9 @@ These are optimized for **human reading**, not default AI loading:
 | File | Responsibility |
 |---|---|
 | `docs/prompts/frontend_agent_prompt_*.md` | Agent role & behavior |
-| `AGENT_PROTOCOL.md` | Response format & discipline |
-| `system-prompt.md` | System‑level constraints |
+| `AGENT_EXECUTION_RULES.md` | Iteration loop, failure limits, execution discipline |
+| `AGENT_PROTOCOL.md` | Response format & structural discipline |
+| `system-prompt.md` | System-level constraints |
 | `user-prompt.md` | User input normalization |
 
 ---

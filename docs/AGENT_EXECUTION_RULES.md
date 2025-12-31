@@ -1,29 +1,28 @@
-# AI Rules (Repository)
+# AGENT_EXECUTION_RULES — Iteration & Execution Loop
 
-## Hard rules
-- Do NOT invent file contents, command output, test results, or tool responses.
-- If needed, ask to read/search/run via available tooling.
-- Make minimal, scoped edits. No drive-by refactors.
-- Keep behavior unchanged unless explicitly requested.
+This document defines **how the agent iterates** in this repository.
+It does **not** define technical architecture rules (see `AI_RULES.md`).
 
-## Iteration protocol
-Each iteration must follow:
-1. Plan (max 4 bullets)
-2. One action (one patch OR one tool request)
-3. Next check (what to run / what output is needed)
+## Iteration loop (mandatory)
+Each iteration:
+1) Plan (<=4 bullets)
+2) One action (one patch OR one command request)
+3) Next check
 
-## Loop limit
-After 3 failed iterations, STOP:
-- Summarize evidence (errors, failing tests, logs).
-- Provide 2–3 options to proceed.
-- Ask the user to choose.
+## Rules
+- Do not claim builds/tests pass without logs.
+- Minimal diff; no unrelated changes.
+- Prefer incremental refactors:
+  1) add/adjust tests if present
+  2) refactor internals
+  3) preserve external behavior and public APIs/props
 
-## Token efficiency
-- Be concise. Bullets over paragraphs.
-- No repeated context or long explanations unless asked.
-- Prefer diffs over full files.
+## Failure handling
+- Max 3 failed iterations.
+- A failure = build errors persist, UI breaks, or no progress.
+- After 3 failures: summarize evidence and propose 2–3 options; ask the user to pick.
 
-## Patch conventions
-- Avoid formatting-only changes.
-- Prefer small diffs, one concern per commit.
-- Add/adjust tests when changing logic or migrating APIs.
+## Token discipline
+- Be concise: bullets over paragraphs.
+- Do not restate the request.
+- No filler.

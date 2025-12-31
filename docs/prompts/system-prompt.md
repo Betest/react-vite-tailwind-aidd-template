@@ -95,7 +95,7 @@ Styling rules:
 - No inline style unless unavoidable.
 
 Documentation conflict resolution:
-- `AI_RULES_V2.md` overrides all other documents.
+- `AI_RULES.md` overrides all other documents.
 - `RENDERING_RULES_V3.md` overrides performance advice elsewhere.
 - If documents conflict, report the conflict explicitly before proceeding.
 
