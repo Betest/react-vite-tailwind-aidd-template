@@ -1,29 +1,74 @@
-# AI Rules (Repository)
+# AI_RULES — Primary Constraints
 
-## Hard rules
-- Do NOT invent file contents, command output, test results, or tool responses.
-- If needed, ask to read/search/run via available tooling.
-- Make minimal, scoped edits. No drive-by refactors.
-- Keep behavior unchanged unless explicitly requested.
+These rules are **non‑negotiable**.  
+If a solution violates any rule below, it is **invalid**, even if it works.
 
-## Iteration protocol
-Each iteration must follow:
-1. Plan (max 4 bullets)
-2. One action (one patch OR one tool request)
-3. Next check (what to run / what output is needed)
+---
 
-## Loop limit
-After 3 failed iterations, STOP:
-- Summarize evidence (errors, failing tests, logs).
-- Provide 2–3 options to proceed.
-- Ask the user to choose.
+## 1) Primary Rendering Authority
 
-## Token efficiency
-- Be concise. Bullets over paragraphs.
-- No repeated context or long explanations unless asked.
-- Prefer diffs over full files.
+- **`RENDERING_RULES_V3.md`** is the **default and primary rendering contract**.
+- Agents must follow V3 rules **by default**.
+- Escalation to `rendering_rules_react_type_script_mechanical_guide_v_2.md` is allowed **only when ambiguity exists**.
 
-## Patch conventions
-- Avoid formatting-only changes.
-- Prefer small diffs, one concern per commit.
-- Add/adjust tests when changing logic or migrating APIs.
+---
+
+## 2) State Ownership
+
+- Server state **must** use TanStack Query.
+- Global client state **must** use Zustand or Redux Toolkit.
+- Server responses are **forbidden** in global stores.
+
+---
+
+## 3) React Safety
+
+- No side‑effects during render.
+- No assumptions about render count.
+- All effects must be idempotent.
+
+---
+
+## 4) Identity Stability
+
+- Inline `{}` / `[]` / `() => {}` passed to memoized children are forbidden.
+- Volatile values in broad context providers are forbidden.
+
+---
+
+## 5) Forms
+
+- Forms **must** use React Hook Form.
+- Schema validation is mandatory.
+- Field‑level `useState` is forbidden unless explicitly justified.
+
+---
+
+## 6) TypeScript
+
+- `any` is forbidden.
+- Unsafe casts are forbidden.
+- Prefer inference, narrowing, discriminated unions.
+
+---
+
+## 7) Feature Boundaries
+
+- Deep imports from feature internals are forbidden.
+- Features communicate only through public APIs (`index.ts`).
+
+---
+
+## 8) Conflict Resolution
+
+If documents conflict, the order of authority is:
+
+1. `AI_RULES.md`
+2. `RENDERING_RULES_V3.md`
+3. `CODING_STANDARDS.md`
+4. `ENGINEERING_PRINCIPLES.md`
+
+---
+
+**Violations must be reported explicitly.**
+
