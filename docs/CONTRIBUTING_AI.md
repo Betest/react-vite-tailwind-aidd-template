@@ -1,219 +1,219 @@
-#AI & Human Contribution Guidelines
+# CONTRIBUTING_AI — AI & Human Contribution Guidelines
 
-Estas reglas aplican tanto a contribuciones humanas como asistidas por LLM.
+These rules apply to **both human contributors and LLM-assisted contributions**.
+They are **enforceable**, **pragmatic**, and optimized for **AI‑Driven Development (AIDD)**.
 
-1. Principios no negociables
+---
 
-KISS: la solución más simple que funcione.
+## 1) Non‑Negotiable Principles
 
-DRY (rule of 3): no abstraer antes de ver el mismo patrón 3 veces.
+* **KISS**: the simplest solution that works comes first.
+* **DRY (rule of three)**: do not abstract until the same pattern appears at least three times.
+* **Clean Code**: clear names, small components, predictable flow.
+* **Minimal diff**: no collateral or unrelated changes.
+* **No behavior changes** unless explicitly requested.
 
-Clean Code: nombres claros, componentes pequeños, flujo predecible.
+---
 
-Minimal diff: no cambios colaterales.
+## 2) Stack Constraints (Hard Rules)
 
-No behavior change salvo que se solicite explícitamente.
+### Allowed
 
-2. Restricciones del stack (hard rules)
-Permitido
+* React 19 (hooks + functional components only)
+* TypeScript (explicit typing, no implicit `any`)
+* Vite
+* TailwindCSS
+* `lucide-react` for **all** icons and logos
 
-React 19 (hooks + functional components)
+### Forbidden (unless explicitly requested)
 
-TypeScript (tipado explícito, sin any implícito)
+* UI frameworks / design systems
+* Additional icon libraries
+* CSS‑in‑JS or theming libraries
+* Additional state or query libraries
 
-Vite
+---
 
-TailwindCSS
+## 3) Pull Request Checklist (Mandatory)
 
-lucide-react para TODOS los iconos y logos
+Before approval or merge:
 
-Prohibido (salvo pedido explícito)
+### Architecture & Design
 
-UI frameworks / design systems
+* Each component or hook has a **single responsibility (SRP)**
+* No premature abstractions
+* Composition is preferred over complex hierarchies
+* If a design pattern is used, its benefit is **clear and justified**
 
-Otras librerías de iconos
+### Code Quality
 
-CSS-in-JS o theming libs
+* Explicit, readable types
+* Small components (≈150 LOC or less when possible)
+* No complex logic inside JSX
+* No unnecessary duplication
 
-State/query libs adicionales
+### UI & Styling
 
-3. Checklist de PR (obligatorio)
+* TailwindCSS only
+* Class names are grouped and readable
+* Icons exclusively from `lucide-react`
 
-Antes de aprobar o mergear:
+### Verification
 
-Arquitectura & diseño
+* Build passes (`npm run build`)
+* No claim that something works without evidence (logs / output)
 
- Cada componente/hook tiene una sola responsabilidad (SRP)
+---
 
- No hay abstracciones prematuras
+## 4) Design Patterns (Practical Guidance)
 
- Se usa composición antes que jerarquías complejas
+Patterns are **not mandatory**. Use them **only if they reduce complexity**.
 
- Si se usó un patrón, su beneficio es claro y justificado
+### Accepted Patterns
 
-Código
+* Composition (default)
+* Custom Hooks (`useX`) for reusable logic
+* Container / Presentational split when complexity justifies it
+* Adapter for isolating APIs or IO
+* Strategy for interchangeable behaviors
+* Reducer pattern (`useReducer`) for complex state transitions
 
- Tipos explícitos y legibles
+**Golden rule**:
+If you cannot explain the benefit of the pattern in **one sentence**, do not use it.
 
- Componentes pequeños (< ~150 líneas idealmente)
+---
 
- No lógica compleja en JSX
+## 5) Hooks Usage Guidelines (Anti‑Bug Rules)
 
- No duplicación innecesaria
+* `useState` for simple state
+* `useReducer` only for complex transitions
 
-UI & estilo
+### `useEffect`
 
- TailwindCSS únicamente
+* ❌ Not for derived state
+* ❌ Not for core business logic
+* ✅ Only for external synchronization (IO, timers, subscriptions)
 
- Clases agrupadas y legibles
+Extract logic into a custom hook **only if**:
 
- Iconos solo desde lucide-react
+* It is reused
+* It improves readability
 
-Verificación
+---
 
- El build pasa (npm run build)
+## 6) Performance & Re‑Renders (Pragmatic)
 
- No se afirma que algo funciona sin evidencia (logs/output)
+### This is NOT about “avoiding props”
 
-4. Uso de patrones de diseño (guía práctica)
+Props are normal. Avoid instead:
 
-Los patrones NO son obligatorios. Úsalos solo si reducen complejidad.
+* **Prop drilling** (passing props through unnecessary layers)
+* **Unstable props** (new objects/functions created per render without need)
 
-Patrones aceptados
+### Rules
 
-Composition (default)
+* Prefer **local state** when it affects only one component
+* Do not lift state if it causes cascading re‑renders
+* Split large components to isolate re‑renders
+* Prefer **primitives and stable references** when relevant
+* Use memoization **only when there is a clear benefit**:
 
-Custom Hooks (useX) para lógica reutilizable
+  * `React.memo` for expensive pure components with stable props
+  * `useMemo` for expensive computations
+  * `useCallback` for handlers passed to memoized children
+* Avoid **memo spam** (memoizing everything without evidence)
 
-Container / Presentational si el componente crece demasiado
+### Lists
 
-Adapter para aislar APIs/IO
-
-Strategy para comportamientos intercambiables
-
-Reducer (useReducer) para estados complejos
-
-Regla de oro
-
-Si no puedes explicar el beneficio del patrón en una frase, no lo uses.
-
-5. Guía de hooks (anti-bugs)
-
-useState para estado simple
-
-useReducer solo si hay transiciones complejas
-
-useEffect:
-
-❌ No para estado derivado
-
-❌ No para lógica principal
-
-✅ Solo para sincronización externa (IO, timers)
-
-Extraer a hook solo si:
-
-Se reutiliza
-
-Mejora legibilidad
-
-## Rendimiento & re-renders (pragmático)
-
-### No es “evitar props”
-- Props son normales. Lo importante es evitar:
-  - **Prop drilling** (pasar props por muchas capas sin necesidad)
-  - **Props inestables** (nuevos objetos/funciones por render sin necesidad)
-
-### Reglas
-- Preferir **estado local** cuando solo afecta un componente.
-- No “levantar estado” si solo causa re-renders en cascada.
-- Dividir componentes grandes para aislar re-renders.
-- Pasar **primitivos** y referencias estables cuando sea relevante.
-- Usar memoización **solo si hay un beneficio claro**:
-  - `React.memo` para componentes puros costosos con props estables
-  - `useMemo` para cómputos costosos
-  - `useCallback` para handlers que se pasan a hijos memoizados
-- Evitar “memo spam” (memoizar todo sin evidencia).
-
-### Listas
-- Keys estables (no index si hay reordenamiento o inserciones).
-- Evitar crear componentes inline dentro de `.map()` si se vuelve confuso o costoso.
+* Use stable keys (never index keys if reorder/insert/remove is possible)
+* Avoid inline component definitions inside `.map()` when they reduce clarity or performance
 
 ### Context
-- No meter valores que cambian frecuentemente en un Context global.
-- Si es necesario, **split de context** o mover el estado más cerca.
+
+* Do not put frequently‑changing values into global Context
+* Split Contexts or move state closer when necessary
 
 ### Effects
-- `useEffect` solo para sincronización externa (IO/timers/subscriptions).
-- Dependencias correctas; no silenciar `exhaustive-deps` sin justificación.
 
+* `useEffect` only for external synchronization
+* Dependencies must be correct; do not silence `exhaustive-deps` without justification
 
-6. Convenciones de componentes
+---
 
-Props pequeñas y enfocadas
+## 7) Component Conventions
 
-Evitar boolean props ambiguas (isEnabled, flag)
+* Small, focused props
+* Avoid ambiguous boolean props (`isEnabled`, `flag`)
+* Prefer enums or union types when appropriate
+* Do not expose internal details via props
 
-Preferir enums/unions cuando aplique
+---
 
-No exponer detalles internos vía props
+## 8) Agent Discipline (LLMs)
 
-7. Disciplina agentica (LLM)
+When an LLM works in this repository:
 
-Cuando un LLM trabaja en este repo:
+### Mandatory protocol
 
-Protocolo obligatorio
+1. Plan (max 4 bullets)
+2. One action
 
-Plan (máx. 4 bullets)
+   * one patch **or**
+   * one requested command
+3. Next check
 
-Una acción
+### Rules
 
-Un patch o
+* ❌ Do not invent outputs (builds, browser behavior, tests)
+* ❌ Do not install new dependencies
+* ❌ No massive refactors
+* ⛔ Maximum of **3 failed iterations**
 
-Un comando solicitado
+After 3 failures:
 
-Next check
+* Summarize evidence
+* Propose options
 
-Reglas
+---
 
-❌ No inventar outputs (build, browser, tests)
+## 9) Over‑Engineering Signals (🚨 Red Flags)
 
-❌ No instalar dependencias nuevas
+* More files without a clear reduction in complexity
+* Abstractions used only once
+* “Future‑proofing” without a current requirement
+* Patterns with no explicit benefit
+* Logic that is hard to follow without comments
 
-❌ No refactors masivos
+If you see any of these → **simplify**.
 
-⛔ Máx. 3 iteraciones fallidas
+---
 
-Luego: resumir evidencia y proponer opciones
+## 10) Recommended Request Template (Humans & LLMs)
 
-8. Señales de over-engineering (red flags 🚨)
+```text
+Goal: <what you want to achieve>
 
-Más archivos que antes sin reducción clara de complejidad
-
-Abstracciones usadas una sola vez
-
-“Preparado para el futuro” sin requerimiento actual
-
-Patrones sin beneficio explícito
-
-Lógica difícil de seguir sin comentarios
-
-Si ves alguno → simplifica.
-
-9. Plantilla de request recomendada (para humanos y LLM)
-Goal: <qué se quiere lograr>
 Constraints:
 - React hooks only
 - TailwindCSS only
 - lucide-react for icons/logos
 - No new packages
+
 Quality:
 - KISS first, DRY after rule-of-3
 - SOLID where it reduces coupling
+
 Verification:
 - Minimal diff
-- Provide next check (build/dev)
+- Provide next check (build / dev)
+```
 
-10. Regla final
+---
 
-La mejor solución es la que otro dev puede entender en 5 minutos sin contexto previo.
+## 11) Final Rule
+
+The best solution is the one **another developer can understand in 5 minutes without prior context**.
+
+---
+
+**This document is authoritative for both human and AI contributions.**
