@@ -1,73 +1,159 @@
-# React + TypeScript + Vite
+# react-vite-tailwind-aidd-template
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **AI-Driven Development (AIDD) Template** for React 19 + TypeScript + Vite + TailwindCSS.
 
-Currently, two official plugins are available:
+This repository is not just a starter project. It is a **reference implementation of an AIDD-ready frontend codebase**, designed to work seamlessly with AI agents (Cursor / Trae / Kilo) while enforcing **high engineering standards**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🎯 Purpose
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+This template exists to:
 
-## Expanding the ESLint configuration
+* Serve as a **baseline AIDD project** for modern React applications
+* Enforce **deterministic, low-risk changes** by AI agents
+* Encode **engineering rules as contracts**, not suggestions
+* Reduce token usage while increasing output correctness
+* Align humans and AI around the same standards
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This repo assumes that **AI will actively modify the codebase**.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🧠 What makes this different from a normal template
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Unlike typical Vite or React templates, this project includes:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+* A **document hierarchy** optimized for AI reasoning
+* Explicit **authority and escalation rules** for decisions
+* Strict separation between:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+  * technical constraints
+  * rendering rules
+  * execution discipline
+  * contribution standards
+* A mechanical rendering contract compatible with **React 19 concurrency**
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 📚 Documentation Map (AIDD)
+
+The repository is governed by the following documents:
+
+### 🔹 Primary Authority (AI-first)
+
+1. **`AI_RULES.md`**
+   Hard, non-negotiable technical constraints
+
+2. **`RENDERING_RULES_V3.md`**
+   Default rendering & performance contract (low-token, mechanical)
+
+3. **`CODING_STANDARDS.md`**
+   Engineering quality and refactoring discipline
+
+4. **`ENGINEERING_PRINCIPLES.md`**
+   Architecture, boundaries, ownership rules
+
+### 🔹 Agent Behavior
+
+* **`AGENT_EXECUTION_RULES.md`** — iteration loop, failure limits, execution discipline
+* **`AGENT_PROTOCOL.md`** — response structure and output discipline
+* **`docs/prompts/frontend_agent_prompt_*.md`** — agent role definition
+
+### 🔹 Human-First References
+
+* `PERFORMANCE_GUIDE.md`
+* `CONTRIBUTING_AI.md`
+* `DESIGN_PATTERNS.md`
+* `REPO_CONTEXT.md`
+
+> See **`INDEX.md`** for the authoritative navigation order.
+
+---
+
+## 🏗️ Tech Stack
+
+* **React 19** (hooks + functional components only)
+* **TypeScript** (strict)
+* **Vite**
+* **TailwindCSS** (utility-first, no CSS-in-JS)
+* **lucide-react** for all icons
+
+No additional UI frameworks or state libraries are included by default.
+
+---
+
+## 🤖 AI Usage Model
+
+This repository is designed to be used with AI assistants:
+
+* Cursor
+* Trae
+* Kilo
+* Chat-based agents
+
+The agent must:
+
+* Follow `INDEX.md` for document loading
+* Obey `AI_RULES.md` and `RENDERING_RULES_V3.md`
+* Apply **minimal diffs** only
+* Stop after 3 failed iterations
+
+Any response that violates these rules is considered **non-compliant**.
+
+---
+
+## 🚦 Contribution Model
+
+All contributions (human or AI-assisted) must follow:
+
+* `CONTRIBUTING_AI.md`
+* `CODING_STANDARDS.md`
+* `AGENT_EXECUTION_RULES.md`
+
+This ensures:
+
+* Predictable reviews
+* Low-risk refactors
+* Stable long-term evolution
+
+---
+
+## 🧪 Intended Use Cases
+
+* Bootstrap an **AIDD-ready frontend project**
+* Use as a **golden reference** for AI-assisted refactors
+* Teaching or experimenting with **AI-governed codebases**
+* Internal templates for teams adopting AI coding workflows
+
+---
+
+## ⚠️ Non-Goals
+
+This template does **not**:
+
+* Provide a full UI kit or design system
+* Optimize for rapid prototyping over correctness
+* Hide complexity behind generators or magic
+
+Correctness and discipline are preferred over speed.
+
+---
+
+## ✅ Status
+
+This repository represents:
+
+> **AIDD_BASELINE v1.0**
+
+It is safe to clone, extend, and evolve under AI-driven workflows.
+
+---
+
+## 📌 Final Note
+
+If you remove the documents, this becomes a normal React template.
+
+If you keep them, this becomes an **AI-governed engineering system**.
+
+Choose intentionally.
